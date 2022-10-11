@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import userRouter from './src/routes/UsersRoutes.js';
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ class App {
   }
 
   routes() {
-    // this.app.use()
+    this.app.use('/users?', userRouter);
   }
 
   database() {
