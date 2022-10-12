@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRouter from './src/routes/UsersRoutes.js';
 import productRoute from './src/routes/ProductsRoute';
+import buyRoute from './src/routes/Buy.js';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ class App {
   routes() {
     this.app.use('/users?', userRouter);
     this.app.use('/products?', productRoute);
+    this.app.use('/buy', buyRoute);
   }
 
   database() {
