@@ -13,16 +13,16 @@ export default class ProductController {
 
   static async getProduct(req, res) {
     try {
-      const { name } = req.params;
+      const { name } = req.query;
       const product = await Product.getProduct(name);
 
       if (!product) {
-        res.json({ error: 'Product not found' });
+        return res.json({ error: 'Product not found' });
       }
 
       return res.json(product);
     } catch (error) {
-      res.staus(404).json(null);
+      return res.status(404).json(null);
     }
   }
 
@@ -42,7 +42,8 @@ export default class ProductController {
 
   static async updateProducts(req, res) {
     try {
-      await Product.updateProduct(req.params.name, req.body);
+      const { name } = req.query;
+      await Product.updateProduct(name, req.body);
 
       return res.json({ message: 'Product updated successfully.' });
     } catch (error) {
@@ -52,7 +53,8 @@ export default class ProductController {
 
   static async deleteProducts(req, res) {
     try {
-      await Product.deleteProduct(req.params.name);
+      const { name } = req.query;
+      await Product.deleteProduct(name);
 
       return res.json({ message: 'Product deleted successfully.' });
     } catch (error) {
