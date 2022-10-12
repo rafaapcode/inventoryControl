@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRouter from './src/routes/UsersRoutes.js';
+import productRoute from './src/routes/ProductsRoute';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ class App {
 
   routes() {
     this.app.use('/users?', userRouter);
+    this.app.use('/products?', productRoute);
   }
 
   database() {
