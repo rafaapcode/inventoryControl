@@ -1,3 +1,58 @@
 {
-  
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Controle de Estoque",
+    "description": "Esta API tem como objetivo simular o controle de estoque de uma pequena loja.",
+    "contact": {
+      "email": "rafaap2003@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/",
+      "description": "API DEV"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Cadastro de usuários",
+        "description": "Esta rota será responsável por cadastrar usuários",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schema/User"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schema": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "admin": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
 }

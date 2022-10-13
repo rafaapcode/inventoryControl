@@ -24,7 +24,7 @@ class App {
   }
 
   routes() {
-    this.app.use('/users?', userRouter);
+    this.app.use('/users', userRouter);
     this.app.use('/products?', productRoute);
     this.app.use('/buy', buyRoute);
     this.app.use('/api-docs', expressUi.serve, expressUi.setup(swaggerConfig));
