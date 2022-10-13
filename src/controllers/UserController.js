@@ -55,7 +55,7 @@ class UserController {
 
     const { id, name, email: emailUser } = user;
 
-    const token = jwt.sign({ id, emailUser }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ id, emailUser }, process.env.TOKEN_SECRET, { expiresIn: '1d' });
 
     res.json({ user: { name, email: emailUser }, token });
   }
