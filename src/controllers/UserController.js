@@ -1,5 +1,9 @@
 import bcryptjs from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import User from '../models/User.js';
+
+dotenv.config();
 
 class UserController {
   async createUser(req, res) {
@@ -29,9 +33,9 @@ class UserController {
   async getUser(req, res) {
     try {
       const { email } = req.body;
-      const user = await User.getUser(email);
+      const { name, email: emailUser } = await User.getUser(email);
 
-      res.json(user);
+      res.json({ name, email: emailUser });
     } catch (error) {
       res.json({ message: 'User not found' });
     }
@@ -49,9 +53,11 @@ class UserController {
       return res.status(404).json({ error: 'Email or password incorrect' });
     }
 
-    const { name, email: emailUser } = user;
+    const { id, name, email: emailUser } = user;
 
-    res.json({ user: { name, email: emailUser }, token: 'Espera um pouco' });
+    const token = jwt.sign({ id, emailUser }, process.env.TOKEN_SECRET);
+
+    res.json({ user: { name, email: emailUser }, token });
   }
 }
 

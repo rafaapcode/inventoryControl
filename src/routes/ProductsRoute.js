@@ -1,12 +1,13 @@
 import Router from 'express';
 import ProductController from '../controllers/ProductController.js';
+import authUser from '../middlewares/auth.js';
 
 const productRoute = new Router();
 
 productRoute.get('/all', ProductController.getAllProducts);
-productRoute.post('/', ProductController.createProduct);
+productRoute.post('/', authUser, ProductController.createProduct);
 productRoute.get('/:name', ProductController.getProduct);
-productRoute.put('/:name', ProductController.updateProducts);
-productRoute.delete('/:name', ProductController.deleteProducts);
+productRoute.put('/:name', authUser, ProductController.updateProducts);
+productRoute.delete('/:name', authUser, ProductController.deleteProducts);
 
 export default productRoute;

@@ -3,9 +3,13 @@ import Product from '../models/Product.js';
 export default class ProductController {
   static async createProduct(req, res) {
     try {
-      const newProduct = await Product.createProduct(req.body);
+      const product = await Product.getProduct(req.body.name);
+      if (product) {
+        return res.json({ message: 'Product already exists, please updated it, instead create another.' });
+      }
+      const { name, price, quantity } = await Product.createProduct(req.body);
 
-      return res.json(newProduct);
+      return res.json({ name, price, quantity });
     } catch (error) {
       res.staus(500).json({ error: 'Errot to create a product' });
     }
