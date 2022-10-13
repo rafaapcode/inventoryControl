@@ -18,9 +18,6 @@ class UserController {
         });
       }
 
-      const salt = bcryptjs.genSaltSync();
-      req.body.password = await bcryptjs.hashSync(req.body.password, salt);
-
       const newUser = await User.createUser(req.body);
 
       res.json(newUser);
@@ -38,6 +35,23 @@ class UserController {
     } catch (error) {
       res.json({ message: 'User not found' });
     }
+  }
+
+  async loginUser(req, res) {
+    const { email, password } = req.body;
+    const user = await User.getUser(email);
+
+    if (!user) {
+      return res.status(404).json({ error: 'Email or password incorrect' });
+    }
+
+    if (!bcryptjs.compareSync(password, user.password)) {
+      return res.status(404).json({ error: 'Email or password incorrect' });
+    }
+
+    const { name, email: emailUser } = user;
+
+    res.json({ user: { name, email: emailUser }, token: 'Espera um pouco' });
   }
 }
 
