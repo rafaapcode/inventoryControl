@@ -2,18 +2,17 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from '../models/User.js';
+import { validateCreate, validateLogin } from '../service/validation.js';
 
 dotenv.config();
 
 class UserController {
   async createUser(req, res) {
     try {
-      const validatorEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const { error } = validateCreate(req.body);
 
-      if (!validatorEmail.test(req.body.email) || req.body.password < 5) {
-        return res.status(401).json({
-          message: ['Password must be at least 7 characters', 'Email incorrect'],
-        });
+      if (error) {
+        return res.status(400).json({ message: error.message });
       }
 
       if (await (User.getUser(req.body.email))) {
@@ -42,6 +41,12 @@ class UserController {
   }
 
   async loginUser(req, res) {
+    const { error } = validateLogin(req.body);
+
+    if (error) {
+      return res.status(400).json({ message: error.message });
+    }
+
     const { email, password } = req.body;
     const user = await User.getUser(email);
 
@@ -53,9 +58,11 @@ class UserController {
       return res.status(404).json({ error: 'Email or password incorrect' });
     }
 
-    const { id, name, email: emailUser } = user;
+    const {
+      id, name, email: emailUser, admin,
+    } = user;
 
-    const token = jwt.sign({ id, emailUser }, process.env.TOKEN_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id, emailUser, admin }, process.env.TOKEN_SECRET, { expiresIn: '1d' });
 
     res.header('authorization', token);
     res.json({ user: `User ${name} logged with Success !!` });
