@@ -7,11 +7,12 @@ dotenv.config();
 export default async function authUser(req, res, next) {
   try {
     const { authorization } = req.headers;
-    if (!authorization) {
+    const [, token] = authorization;
+    if (!token) {
       return res.status(401).json({ error: 'Token is required.' });
     }
 
-    const { emailUser } = jwt.verify(authorization, process.env.TOKEN_SECRET);
+    const { emailUser } = jwt.verify(token, process.env.TOKEN_SECRET);
 
     const user = await User.getUser(emailUser);
     if (!user) {
