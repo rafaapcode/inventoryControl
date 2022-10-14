@@ -61,9 +61,45 @@
           }
         }
       }
+    },
+    "/users/getuser":{
+      "post": {
+        "summary": "Busca de um usuário",
+        "description": "Esta rota será responsável por buscar um usuário pelo seu email",
+        "tags": [
+          "Users"
+        ],
+        "requestBody":{
+          "content":{
+            "application/json":{
+              "schema":{
+                "User":{
+                  "type": "object",
+                  "properties":{
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "John Doe",
+                    "email": "johndoe@example.com"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  
+
   "components": {
     "schema": {
       "User": {
