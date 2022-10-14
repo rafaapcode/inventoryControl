@@ -27,6 +27,35 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schema/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "John Doe",
+                    "email": "johndoe@example.com",
+                    "password": "123456",
+                    "admin": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Campo preenchido inválido."
+          },
+          "401": {
+            "description": "Usuário já existe"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                 "type": "object",
+                 "$ref": "#/components/schema/User"
+                }
               }
             }
           }
@@ -34,6 +63,7 @@
       }
     }
   },
+  
   "components": {
     "schema": {
       "User": {
