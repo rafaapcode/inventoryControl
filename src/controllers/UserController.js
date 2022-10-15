@@ -36,7 +36,7 @@ class UserController {
 
       res.json({ name, email: emailUser });
     } catch (error) {
-      res.json({ message: 'User not found' });
+      res.status(404).json({ message: 'User not found' });
     }
   }
 

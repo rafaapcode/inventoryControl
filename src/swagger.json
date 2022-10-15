@@ -53,8 +53,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                 "type": "object",
-                 "$ref": "#/components/schema/User"
+                  "type": "object",
+                  "$ref": "#/components/schema/User"
                 }
               }
             }
@@ -62,23 +62,20 @@
         }
       }
     },
-    "/users/getuser":{
+    "/users/getuser": {
       "post": {
         "summary": "Busca de um usuário",
         "description": "Esta rota será responsável por buscar um usuário pelo seu email",
         "tags": [
           "Users"
         ],
-        "requestBody":{
-          "content":{
-            "application/json":{
-              "schema":{
-                "User":{
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "User": {
                   "type": "object",
-                  "properties":{
-                    "name": {
-                      "type": "string"
-                    },
+                  "properties": {
                     "email": {
                       "type": "string"
                     }
@@ -88,34 +85,58 @@
               "examples": {
                 "user": {
                   "value": {
-                    "name": "John Doe",
                     "email": "johndoe@example.com"
                   }
                 }
               }
             }
           }
-        }
-      }
-    }
-  },
+        },
+        "responses": {
+          "404": {
+            "description": "Usuário não econtrado"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Nome do usuário"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Email do usuário"
+                      }
+                    }
 
-  "components": {
-    "schema": {
-      "User": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "admin": {
-            "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "components": {
+        "schema": {
+          "User": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "admin": {
+                "type": "boolean"
+              }
+            }
           }
         }
       }
