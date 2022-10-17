@@ -117,23 +117,62 @@
             }
           }
         }
-      },
-      "components": {
-        "schema": {
-          "User": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Faz o login de um usuário",
+        "description": "Esta rota será responsável por faze o login de um usuário pelo seu email e senha",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "User": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
               },
-              "email": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "admin": {
-                "type": "boolean"
+              "examples": {
+                "user": {
+                  "value": {
+                    "email": "johndoe@example.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Campo senha ou email não preenchido."
+          },
+          "404": {
+            "description": "Email ou senha incorreto."
+          },
+          "200": {
+            "description": "Retorna uma mensagem para o usuário e o TOKEN no cabeçalho authorization.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "string",
+                      "description": "Mensagem de que o usuario foi logado"
+                    }
+                  }
+                }
               }
             }
           }
