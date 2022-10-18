@@ -35,12 +35,12 @@ export default class ProductController {
       const products = await Product.allProducts();
 
       if (!products) {
-        res.json(null);
+        res.status(404).json(null);
       }
 
       return res.json(products);
     } catch (error) {
-      res.staus(404).json(null);
+      return res.staus(404).json(null);
     }
   }
 
