@@ -5,13 +5,13 @@ export default class ProductController {
     try {
       const product = await Product.getProduct(req.body.name);
       if (product) {
-        return res.json({ message: 'Product already exists, please updated it, instead create another.' });
+        return res.status(400).json({ message: 'Product already exists.' });
       }
       const { name, price, quantity } = await Product.createProduct(req.body);
 
       return res.json({ name, price, quantity });
     } catch (error) {
-      res.staus(500).json({ error: 'Errot to create a product' });
+      res.status(500).json({ error: 'Error to create a product' });
     }
   }
 
@@ -21,12 +21,12 @@ export default class ProductController {
       const product = await Product.getProduct(name);
 
       if (!product) {
-        return res.json({ error: 'Product not found' });
+        return res.status(404).json({ error: 'Product not found' });
       }
 
       return res.json(product);
     } catch (error) {
-      return res.status(404).json(null);
+      return res.status(404).json({ error: 'Product not found' });
     }
   }
 

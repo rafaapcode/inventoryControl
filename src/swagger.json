@@ -229,8 +229,109 @@
             "bearerAuth": []
           }
         ],
-        "requestBody":{},
-        "responses":{}
+        "requestBody":{
+          "content": {
+            "application/json": {
+              "schema": {
+                "Product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "quantity": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Product": {
+                  "value": {
+                    "name": "Garrafa",
+                    "price": 23.00,
+                    "quantity": 15
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "400": {
+            "description": "Produto já existe."
+          },
+          "500": {
+            "description": "Erro ao criar o produto."
+          },
+          "200": {
+            "description": "Retorna o produto criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "quantity": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/{name}":{
+      "get":{
+        "summary": "Retorna um produto.",
+        "description": "Retorna as informações do produto buscado pelos parâmetros.",
+        "tags": [
+          "Products"
+        ],
+        "parameters":[
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do produto desejado",
+            "required": true
+          }
+        ],
+        "responses":{
+          "404": {
+            "description": "Produto não encontrado."
+          },
+          "200": {
+            "description": "Retorna o produto buscado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "quantity": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
