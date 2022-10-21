@@ -332,6 +332,77 @@
             }
           }
         }
+      },
+      "put":{
+        "summary": "Retorna o produto atualizado",
+        "description": "Retorna um objeto com o produto atualizado",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters":[
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do produto desejado",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "Product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "quantity": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Product": {
+                  "value": {
+                    "name": "New Name",
+                    "price": 12,
+                    "quantity": 7
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Produto não encontrado."
+          },
+          "200": {
+            "description": "Retorna uma mensagem ao usuário, avisando que o produto foi atualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -343,3 +414,4 @@
     }
   }
 }
+
