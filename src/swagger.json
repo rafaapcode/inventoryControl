@@ -229,7 +229,7 @@
             "bearerAuth": []
           }
         ],
-        "requestBody":{
+        "requestBody": {
           "content": {
             "application/json": {
               "schema": {
@@ -260,7 +260,7 @@
             }
           }
         },
-        "responses":{
+        "responses": {
           "400": {
             "description": "Produto já existe."
           },
@@ -291,14 +291,14 @@
         }
       }
     },
-    "/product/{name}":{
-      "get":{
+    "/product/{name}": {
+      "get": {
         "summary": "Retorna um produto.",
         "description": "Retorna as informações do produto buscado pelos parâmetros.",
         "tags": [
           "Products"
         ],
-        "parameters":[
+        "parameters": [
           {
             "name": "name",
             "in": "query",
@@ -306,7 +306,7 @@
             "required": true
           }
         ],
-        "responses":{
+        "responses": {
           "404": {
             "description": "Produto não encontrado."
           },
@@ -333,9 +333,9 @@
           }
         }
       },
-      "put":{
-        "summary": "Retorna o produto atualizado",
-        "description": "Retorna um objeto com o produto atualizado",
+      "put": {
+        "summary": "Retorna uma mensagem",
+        "description": "Retorna uma mensage dizendo que o produto foi atualizado",
         "tags": [
           "Products"
         ],
@@ -344,7 +344,7 @@
             "bearerAuth": []
           }
         ],
-        "parameters":[
+        "parameters": [
           {
             "name": "name",
             "in": "query",
@@ -403,6 +403,105 @@
             }
           }
         }
+      },
+      "delete": {
+        "summary": "Retorna uma mensagem",
+        "description": "Retorna uma mensagem dizendo que o produto foi deletado.",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do produto desejado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Produto não encontrado."
+          },
+          "200": {
+            "description": "Retorna uma mensagem ao usuário, avisando que o produto foi deletado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buy": {
+      "post": {
+        "summary": "Simula uma compra.",
+        "description": "Faz a simulação da compra de um produto.",
+        "tags": [
+          "Buyers"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "Product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "quantityToBuy": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Product": {
+                  "value": {
+                    "name": "Iphone",
+                    "quantityToBuy": 11
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Não temos essa quantidade de produtos em estoque."
+          },
+          "404": {
+            "description": "Produto não encontrado."
+          },
+          "200": {
+            "description": "Retorna uma mensagem ao usuário, avisando a quantidade, nome e o quanto ele gastou com o produto.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -414,4 +513,3 @@
     }
   }
 }
-
